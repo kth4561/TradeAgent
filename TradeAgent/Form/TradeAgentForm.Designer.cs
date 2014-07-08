@@ -1,6 +1,6 @@
 ﻿namespace TradeAgent
 {
-    partial class Form1
+    partial class TradeAgentForm
     {
         /// <summary>
         /// Required designer variable.

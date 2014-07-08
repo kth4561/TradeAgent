@@ -14,9 +14,13 @@ namespace TradeAgent
         [STAThread]
         static void Main()
         {
+            log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+            log.Info("-d-ds-s-ds-d-sd-sd-sd-ds");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new TradeAgentForm());
         }
     }
 }
