@@ -13,7 +13,9 @@ namespace TradeAgent
     {
         public LoginForm()
         {
+            
             InitializeComponent();
+            
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.ComponentModel;
 using System.Windows.Forms;
 using XA_SESSIONLib;
@@ -8,10 +8,10 @@ namespace TradeAgent
 {
     class SessionCtrl : _IXASessionEvents
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public IXASession m_Session;
-        protected UCOMIConnectionPoint m_icp;
-        protected UCOMIConnectionPointContainer m_icpc;
+        protected IConnectionPoint m_icp;
+        protected IConnectionPointContainer m_icpc;
 
         public SessionCtrl()
         {
@@ -20,8 +20,8 @@ namespace TradeAgent
 
         ~SessionCtrl()
         {
-            m_Session.Logout();
-            m_Session.DisconnectServer();
+            //m_Session.Logout();
+            //m_Session.DisconnectServer();
         }
 
         /// <summary>
@@ -32,12 +32,12 @@ namespace TradeAgent
             int m_dwCookie=0;
 
             XASession session = new XASession();
-            m_icpc = (UCOMIConnectionPointContainer)session;
+            m_icpc = (IConnectionPointContainer)session;
             Guid IID_SessionEvents = typeof(_IXASessionEvents).GUID;
             m_icpc.FindConnectionPoint(ref IID_SessionEvents, out m_icp);
             m_icp.Advise(this, out m_dwCookie);
 
-            log.Debug("세션 생성시 Advise의 호출 결과 dwCookie는 " + m_dwCookie);
+            Console.WriteLine("세션 생성시 Advise의 호출 결과 dwCookie는 " + m_dwCookie);
             return session;
         }
 
