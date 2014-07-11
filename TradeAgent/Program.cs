@@ -17,11 +17,9 @@ namespace TradeAgent
         [STAThread]
         static void Main()
         {
-
-            new SessionCtrl();
-          //  Application.EnableVisualStyles();
-          //  Application.SetCompatibleTextRenderingDefault(false);
-          //  Application.Run(new LoginForm());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new LoginForm());
         }
     }
 }
