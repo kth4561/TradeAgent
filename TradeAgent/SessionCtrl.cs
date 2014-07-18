@@ -37,17 +37,17 @@ namespace TradeAgent
         /// </summary>
         /// <returns>생성된 세션 객체</returns>
         private XASession getSession(){
-            int m_dwCookie=0;
-            IConnectionPoint m_icp;
-            IConnectionPointContainer m_icpc;
+            int dwCookie=0;
+            IConnectionPoint icp;
+            IConnectionPointContainer icpc;
 
             XASession session = new XASession();
-            m_icpc = (IConnectionPointContainer)session;
+            icpc = (IConnectionPointContainer)session;
             Guid IID_SessionEvents = typeof(_IXASessionEvents).GUID;
-            m_icpc.FindConnectionPoint(ref IID_SessionEvents, out m_icp);
-            m_icp.Advise(this, out m_dwCookie);
+            icpc.FindConnectionPoint(ref IID_SessionEvents, out icp);
+            icp.Advise(this, out dwCookie);
 
-            Console.WriteLine("세션 생성시 Advise의 호출 결과 dwCookie는 " + m_dwCookie);
+            Console.WriteLine("세션 생성시 Advise의 호출 결과 dwCookie는 " + dwCookie);
             return session;
         }
 
