@@ -5,14 +5,26 @@ using System.Windows.Forms;
 using XA_SESSIONLib;
 using System.Threading;
 
+using TradeAgent.Transactions.TR;
+using XA_DATASETLib;
+
 namespace TradeAgent
 {
     class SessionCtrl : _IXASessionEvents
     {
         //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        public IXASession m_Session;
+        private IXASession m_Session;
         public const string REAR_SERVER_URL = "hts.etrade.co.kr";
         public const string SIMUL_SERVER_URL = "demo.etrade.co.kr";
+
+        #region event 전달을 위한 delegate
+        public delegate void LoginHandler(string szCode, string szMsg);
+        public event LoginHandler OnLogin;
+        public delegate void LogoutHandler();
+        public event LogoutHandler OnLogout;
+        public delegate void OnDisconnectHandler();
+        public event OnDisconnectHandler OnDisconnect;
+        #endregion
 
         public SessionCtrl()
         {
@@ -26,6 +38,7 @@ namespace TradeAgent
 
         public void disconnect()
         {
+            m_Session.Logout();
             if (m_Session.IsConnected())
             {
                 m_Session.DisconnectServer();
@@ -56,7 +69,7 @@ namespace TradeAgent
         /// </summary>
         public void connect(string serverURL)
         {
-            Console.WriteLine("서버 접속 시작");
+            Console.WriteLine("서버 접속 시작 : " + serverURL);
             // 세션 얻기 시도는 최대 10분간 1초에 한 번씩 요청한다. 
             DateTime time = DateTime.Now;
 
@@ -93,11 +106,7 @@ namespace TradeAgent
                 
                 if (!result)
                 {
-                    Console.WriteLine("로그인에 실패했어요! 계정 정보를 다시 한 번 확인해주세요.");
-                }
-                else
-                {
-                    Console.WriteLine("로그인 요청되었습니다.");
+                    OnLogin.Invoke("FAIL", "로그인에 실패했어요! 계정 정보를 다시 한 번 확인해주세요.");
                 }
             }
             return result;
@@ -108,20 +117,20 @@ namespace TradeAgent
         /// 에러 메시지를 가공해주는 기능을 담당.
         /// </summary>
         /// <returns></returns>
-        private string getLastErrorMessage(int number = 0)
-        {
-            string errmsg = "";
-            switch (m_Session.GetLastError())
-            {
-                case -1: errmsg = "XINGAPI_ERROR_SOCKET_CREATE_FAIL (-1) 소켓생성 실패"; break;
-                case -2: errmsg = "XINGAPI_ERROR_CONNECT_FAIL (-2) 서버연결 실패"; break;
-                case -3: errmsg = "XINGAPI_ERROR_WRONG_ADDRESS (-3) 서버주소가 잘못되었음"; break;
-                case -4: errmsg = "XINGAPI_ERROR_CONNECT_TIMEOUT (-4) 연결시간 초과"; break;
-                case -5: errmsg = "XINGAPI_ERROR_ALREADY_CONNECT (-5) 이미 서버에 연결중이거나 연결시도중"; break;
-                default: errmsg = "알 수 없는 에러. (" + m_Session.GetErrorMessage(number) + ")"; break;
-            }
-            return errmsg;
-        }
+        //private string getLastErrorMessage(int number = 0)
+        //{
+        //    string errmsg = "";
+        //    switch (m_Session.GetLastError())
+        //    {
+        //        case -1: errmsg = "XINGAPI_ERROR_SOCKET_CREATE_FAIL (-1) 소켓생성 실패"; break;
+        //        case -2: errmsg = "XINGAPI_ERROR_CONNECT_FAIL (-2) 서버연결 실패"; break;
+        //        case -3: errmsg = "XINGAPI_ERROR_WRONG_ADDRESS (-3) 서버주소가 잘못되었음"; break;
+        //        case -4: errmsg = "XINGAPI_ERROR_CONNECT_TIMEOUT (-4) 연결시간 초과"; break;
+        //        case -5: errmsg = "XINGAPI_ERROR_ALREADY_CONNECT (-5) 이미 서버에 연결중이거나 연결시도중"; break;
+        //        default: errmsg = "알 수 없는 에러. (" + m_Session.GetErrorMessage(number) + ")"; break;
+        //    }
+        //    return errmsg;
+        //}
 
         #region _IXASessionEvents
         /// <summary>
@@ -130,23 +139,24 @@ namespace TradeAgent
         /// </summary>
         void _IXASessionEvents.Disconnect()
         {
-            Console.WriteLine("onDisconnect 서버에서 통신을 끊어버림! 세션을 새로 만듭니다.");
+            //Console.WriteLine("onDisconnect 서버에서 통신을 끊어버림! 세션을 새로 만듭니다.");
             
-            // 우선 세션을 새로 만든다
-            m_Session.DisconnectServer();
-            m_Session = getSession();
-            Console.WriteLine("세션을 새로 만들었습니다. 서버 접속 및 로그인을 시도합니다.");
-            //@todo 다시 접속하게 만든다.
+            //// 우선 세션을 새로 만든다
+            //m_Session.DisconnectServer();
+            //m_Session = getSession();
+            //Console.WriteLine("세션을 새로 만들었습니다. 서버 접속 및 로그인을 시도합니다.");
+            ////@todo 다시 접속하게 만든다.
+            OnDisconnect.Invoke();
         }
 
         void _IXASessionEvents.Login(string szCode, string szMsg)
         {
-            Console.WriteLine("onLogin result" + szCode + " : " + szMsg);
+            OnLogin.Invoke(szCode, szMsg);
         }
         // deprecated
         void _IXASessionEvents.Logout()
         {
-            Console.WriteLine("onLogout");
+            OnLogout.Invoke();
         }
         #endregion
     }
