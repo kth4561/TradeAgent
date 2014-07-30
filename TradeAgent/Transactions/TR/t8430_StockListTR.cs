@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,15 +7,42 @@ using XA_DATASETLib;
 
 namespace TradeAgent.Transactions.TR
 {
-    class t8430_StockListTR : ITransitionTR
+    class t8430_StockListTR : XADataAdapter, _IXAQueryEvents
     {
+        public delegate void OnReceiveDataComplete(List<IOutput> data);
+        public event OnReceiveDataComplete OnReceiveComplete;
+
+        IXAQuery query;
+        const string RESOURCE_NAME = "t8430";
+        Hashtable input = null;
+        
         public t8430_StockListTR()
         {
-            resName = "t84300";
+            query = getTR(RESOURCE_NAME);
         }
-
-        public void ReceiveData(IXAQuery query, string szTrCode)
+               
+        public void request(Hashtable ht)
         {
+            // null이면 진행중이 아님.
+            if (input == null)
+            {
+                input = ht;
+                ICollection keys = input.Keys;
+                foreach (object key in keys)
+                {
+                    Console.WriteLine(key + " : " + input[key]);
+                    query.SetFieldData("t8430InBlock", key.ToString(), 0, input[key].ToString());
+                }
+                query.Request(false);
+            }
+            
+        }
+        
+        void _IXAQueryEvents.ReceiveData(string szTrCode)
+        {
+            //tx.ReceiveData(m_query, szTrCode);
+
+
             int count = query.GetBlockCount("t8430OutBlock");
             ////종목명,hname,hname,char,20;
             ////단축코드,shcode,shcode,char,6;
@@ -30,11 +58,21 @@ namespace TradeAgent.Transactions.TR
             {
                 Console.WriteLine(i + " : " + query.GetFieldData("t8430OutBlock", "hname", i));
             }
+
+
+            List<IOutput> data = new List<IOutput>();
+            // 데이터 처리가 완료되면 
+
+            input = null;
+            if (OnReceiveComplete != null)
+            {
+                OnReceiveComplete.Invoke(data);
+            }           
         }
 
-        public void ReceiveMessage(IXAQuery query, bool bIsSystemError, string nMessageCode, string szMessage)
+        void _IXAQueryEvents.ReceiveMessage(bool bIsSystemError, string nMessageCode, string szMessage)
         {
-           
+            //tx.ReceiveMessage(m_query, bIsSystemError, nMessageCode, szMessage);
         }
     }
 }

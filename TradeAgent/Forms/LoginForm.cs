@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using XA_DATASETLib;
 using TradeAgent.Transactions.TR;
+using System.Collections;
 
 namespace TradeAgent
 {
@@ -24,8 +25,10 @@ namespace TradeAgent
         {
            if ("0000".Equals(szCode))
            {
-               TransactionCtrl trCtrl = new TransactionCtrl(new t8430_StockListTR());
-               
+               t8430_StockListTR tr = new t8430_StockListTR();
+               Hashtable ht = new Hashtable();
+               ht.Add("gubun", 0);
+               tr.request(ht);
                // A. BLOCK Occurs
                //IXAQuery query = new t8430_StockListTR().setResource("t8430");
                //query.SetFieldData("t8430InBlock", "gubun", 0, "0");
