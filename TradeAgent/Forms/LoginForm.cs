@@ -28,21 +28,18 @@ namespace TradeAgent
                t8430_StockListTR tr = new t8430_StockListTR();
                Hashtable ht = new Hashtable();
                ht.Add("gubun", 0);
+               tr.OnReceiveComplete += onRecevieData;
                tr.request(ht);
-               // A. BLOCK Occurs
-               //IXAQuery query = new t8430_StockListTR().setResource("t8430");
-               //query.SetFieldData("t8430InBlock", "gubun", 0, "0");
-               //int result = query.Request(false);
-               //if (result < 0)
-               //{
-               //    Console.WriteLine("t8430 request fail : " + query.GetLastError());
-               //}
-               //this.Close();
+               
            }
            else
            {
                MessageBox.Show(szMsg);
            }
+        }
+        private void onRecevieData(List<t8430_OutputTR> data)
+        {
+            Console.WriteLine("data" + data.Count);
         }
 
         private void OnLogout()

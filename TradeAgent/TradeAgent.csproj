@@ -108,12 +108,11 @@
     <Compile Include="Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="IOutput.cs" />
-    <Compile Include="t8430_OutputTR.cs" />
+    <Compile Include="Transactions\TR\t8430_OutputTR.cs" />
     <Compile Include="SessionCtrl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XADataAdapter.cs" />
+    <Compile Include="Transactions\XADataAdapter.cs" />
     <Compile Include="Transactions\TR\t8430_StockListTR.cs" />
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

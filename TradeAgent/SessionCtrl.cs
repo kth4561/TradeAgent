@@ -14,8 +14,8 @@ namespace TradeAgent
     {
         //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IXASession m_Session;
-        public const string REAR_SERVER_URL = "hts.etrade.co.kr";
-        public const string SIMUL_SERVER_URL = "demo.etrade.co.kr";
+        public static const string REAR_SERVER_URL = "hts.etrade.co.kr";
+        public static const string SIMUL_SERVER_URL = "demo.etrade.co.kr";
 
         #region event 전달을 위한 delegate
         public delegate void LoginHandler(string szCode, string szMsg);
