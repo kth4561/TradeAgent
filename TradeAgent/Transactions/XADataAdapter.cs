@@ -27,7 +27,7 @@ namespace TradeAgent.Transactions
                 ICollection keys = input.Keys;
                 foreach (object key in keys)
                 {
-                   // Console.WriteLine(key + " : " + input[key]);
+                    Console.WriteLine(key + " : " + input[key]);
                     query.SetFieldData(resName + "InBlock", key.ToString(), 0, input[key].ToString());
                 }
                 query.Request(false);
@@ -46,7 +46,7 @@ namespace TradeAgent.Transactions
             IConnectionPointContainer icpc;
 
             IXAQuery query = new XAQuery();
-            //query.ResFileName = @"\Res\" + resName + ".res";
+            query.ResFileName = @"\Res\" + resName + ".res";
             icpc = (IConnectionPointContainer)query;
             Guid IID_QueryEvents = typeof(_IXAQueryEvents).GUID;
             icpc.FindConnectionPoint(ref IID_QueryEvents, out icp);

@@ -14,37 +14,39 @@ namespace TradeAgent
 {
     public partial class LoginForm : Form
     {
-        private SessionCtrl m_session = null;
         public LoginForm()
         {
             InitializeComponent();
+            Global.session = new SessionCtrl();
+            Global.session.OnLogin += OnLogin;
+            Global.session.OnLogout += OnLogout;
+            Global.session.OnDisconnect += OnDisconnect;
         }
 
-        #region sessionCtrl evnt handler 
+        #region sessionCtrl event handler 
         private void OnLogin(string szCode, string szMsg)
         {
            if ("0000".Equals(szCode))
            {
-               t8430_StockListTR tr = new t8430_StockListTR();
-               Hashtable ht = new Hashtable();
-               ht.Add("gubun", 0);
-               tr.OnReceiveComplete += onRecevieData;
-               tr.request(ht);
-               
+               this.Close();
            }
            else
            {
                MessageBox.Show(szMsg);
            }
         }
-        private void onRecevieData(List<t8430_OutputTR> data)
-        {
-            Console.WriteLine("data" + data.Count);
-        }
-
+        
         private void OnLogout()
         {
              Console.WriteLine("로그 아웃");
+        }
+
+        /// <summary>
+        /// 서버에서 강제로 연결을 종료시켰을때 발생
+        /// </summary>
+        private void OnDisconnect()
+        {
+            Global.session.disconnect();
         }
         #endregion
 
@@ -52,12 +54,8 @@ namespace TradeAgent
         {
             if (!this.tbId.Text.Trim().Equals("") && !this.tbPw.Text.Trim().Equals(""))
             {
-                m_session = new SessionCtrl();
-                m_session.OnLogin += OnLogin;
-                m_session.OnLogout += OnLogout;
-
-                m_session.connect(cbServer.SelectedValue.ToString());
-                m_session.login(this.tbId.Text, this.tbPw.Text, "");
+                Global.session.connect(cbServer.SelectedValue.ToString());
+                Global.session.login(this.tbId.Text, this.tbPw.Text, "");
             }
             else
             {
@@ -68,15 +66,15 @@ namespace TradeAgent
 
         private void btExit_Click(object sender, EventArgs e)
         {
-
-            if (m_session != null)
+            if (Global.session != null)
             {
-                m_session.logout();
-                m_session.disconnect();
+                Global.session.logout();
+                Global.session.disconnect();
             }
             Console.WriteLine("접속종료");
+            this.Hide();
             this.Close();
-            Application.Exit();
+
         }
 
         private void LoginForm_Load(object sender, EventArgs e)

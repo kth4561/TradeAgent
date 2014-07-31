@@ -10,12 +10,12 @@ using XA_DATASETLib;
 
 namespace TradeAgent
 {
-    class SessionCtrl : _IXASessionEvents
+    public class SessionCtrl : _IXASessionEvents
     {
         //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IXASession m_Session;
-        public static const string REAR_SERVER_URL = "hts.etrade.co.kr";
-        public static const string SIMUL_SERVER_URL = "demo.etrade.co.kr";
+        public static readonly string REAR_SERVER_URL = "hts.etrade.co.kr";
+        public static readonly string SIMUL_SERVER_URL = "demo.etrade.co.kr";
 
         #region event 전달을 위한 delegate
         public delegate void LoginHandler(string szCode, string szMsg);
@@ -38,7 +38,6 @@ namespace TradeAgent
 
         public void disconnect()
         {
-            m_Session.Logout();
             if (m_Session.IsConnected())
             {
                 m_Session.DisconnectServer();

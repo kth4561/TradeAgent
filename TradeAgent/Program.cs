@@ -19,7 +19,9 @@ namespace TradeAgent
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            new LoginForm().ShowDialog();
             Application.Run(new LoginForm());
+            Application.Exit();
         }
     }
 }
