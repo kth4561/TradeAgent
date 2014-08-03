@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TradeAgent.Transactions.TR
+namespace TradeAgent.Model
 {
-    public class t8430_OutputTR
+    public class Stock
     {
+        ////////////////
+        /// t8430
+        ////////////////
+
         ////종목명,hname,hname,char,20;
         ////단축코드,shcode,shcode,char,6;
         ////확장코드,expcode,expcode,char,12;

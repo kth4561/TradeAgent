@@ -10,17 +10,23 @@ using XA_DATASETLib;
 using TradeAgent.Transactions.TR;
 using System.Collections;
 
-namespace TradeAgent
+namespace TradeAgent.Forms
 {
     public partial class LoginForm : Form
     {
+        SessionCtrl session;
+
+        public SessionCtrl getSession() {
+            return session;
+        }
+
         public LoginForm()
         {
             InitializeComponent();
-            Global.session = new SessionCtrl();
-            Global.session.OnLogin += OnLogin;
-            Global.session.OnLogout += OnLogout;
-            Global.session.OnDisconnect += OnDisconnect;
+            session = new SessionCtrl();
+            session.OnLogin += OnLogin;
+            session.OnLogout += OnLogout;
+            session.OnDisconnect += OnDisconnect;
         }
 
         #region sessionCtrl event handler 
@@ -28,6 +34,7 @@ namespace TradeAgent
         {
            if ("0000".Equals(szCode))
            {
+               this.DialogResult = DialogResult.OK;
                this.Close();
            }
            else
@@ -46,7 +53,7 @@ namespace TradeAgent
         /// </summary>
         private void OnDisconnect()
         {
-            Global.session.disconnect();
+            session.disconnect();
         }
         #endregion
 
@@ -54,8 +61,8 @@ namespace TradeAgent
         {
             if (!this.tbId.Text.Trim().Equals("") && !this.tbPw.Text.Trim().Equals(""))
             {
-                Global.session.connect(cbServer.SelectedValue.ToString());
-                Global.session.login(this.tbId.Text, this.tbPw.Text, "");
+                session.connect(cbServer.SelectedValue.ToString());
+                session.login(this.tbId.Text, this.tbPw.Text, "");
             }
             else
             {
@@ -66,13 +73,13 @@ namespace TradeAgent
 
         private void btExit_Click(object sender, EventArgs e)
         {
-            if (Global.session != null)
+            if (session != null)
             {
-                Global.session.logout();
-                Global.session.disconnect();
+                session.logout();
+                session.disconnect();
             }
             Console.WriteLine("접속종료");
-            this.Hide();
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
 
         }

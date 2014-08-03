@@ -1,4 +1,4 @@
-﻿namespace TradeAgent
+﻿namespace TradeAgent.Forms
 {
     partial class LoginForm
     {
@@ -151,6 +151,7 @@
             this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.RightToLeftLayout = true;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.Login.ResumeLayout(false);
             this.Login.PerformLayout();

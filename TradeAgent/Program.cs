@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TradeAgent.Forms;
 using log4net;
 
 namespace TradeAgent
@@ -19,8 +20,11 @@ namespace TradeAgent
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            new LoginForm().ShowDialog();
-            Application.Run(new LoginForm());
+            LoginForm loginForm = new LoginForm();
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new MainForm(loginForm.getSession()));
+            }
             Application.Exit();
         }
     }
