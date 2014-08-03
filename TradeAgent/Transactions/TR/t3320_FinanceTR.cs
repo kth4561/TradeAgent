@@ -89,7 +89,7 @@ namespace TradeAgent.Transactions.TR
             }
             catch (System.FormatException e)
             {
-                Console.WriteLine(e.Message);
+                //Console.WriteLine(e.Message);
             }
             
             // 데이터 처리가 완료되면 

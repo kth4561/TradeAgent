@@ -41,7 +41,7 @@ namespace TradeAgent.Forms
             rbConsole.Write("[종목조회] ", Color.GreenYellow);
             rbConsole.Write("총 ");
             rbConsole.Write(data.Count.ToString(), Color.Red);
-            rbConsole.Write(" 건 ");
+            rbConsole.Write(" 건");
             rbConsole.WriteLine(" 완료", Color.Violet);
             stocks = data;
             getStockFinance(stocks[index]);
@@ -61,7 +61,7 @@ namespace TradeAgent.Forms
         void OnReceiveStockFinance(StockFinance data)
         {
             rbConsole.WriteLine(" 완료", Color.Violet);
-            if (stocks.Count-1 > index)
+            if (index < 10) // || (stocks.Count - 1 > index))
             {
                 Thread.Sleep(1000);
                 Stock stock = stocks[++index];
@@ -70,7 +70,9 @@ namespace TradeAgent.Forms
             }
             else
             {
-                rbConsole.Write("전부다 완료", Color.Red);
+                rbConsole.Write("[재무]",  Color.GreenYellow);
+                rbConsole.Write(" 조회");
+                rbConsole.WriteLine(" 완료",  Color.Violet);
             }
         }
     }
