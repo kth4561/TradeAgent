@@ -46,6 +46,26 @@ namespace TradeAgent.Forms
             rbConsole.Write("총 ");
             rbConsole.Write(data.Count.ToString(), Color.Red);
             rbConsole.WriteLine(" 건 조회완료");
+
+
+            rbConsole.WriteLine(data[0].hname + "----" + data[0].shcode);
+            //rbConsole.Write("[재무조회] ", Color.GreenYellow);
+            //t3320_FinanceTR tr = new t3320_FinanceTR();
+            //tr.OnReceiveComplete += OnReceiveStockFinance;
+            //Hashtable ht = new Hashtable();
+            //ht.Add("gubun", 0);
+            //tr.request(ht);
+            //rbConsole.WriteLine("조회 중...");
+
+        }
+
+        void OnReceiveStockFinance(List<Stock> data)
+        {
+            //rbConsole.Write("[재무조회] ", Color.GreenYellow);
+            //rbConsole.Write("총 ");
+            //rbConsole.Write(data.Count.ToString(), Color.Red);
+            //rbConsole.WriteLine(" 건 조회완료");
+
         }
 
     }

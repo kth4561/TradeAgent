@@ -121,6 +121,7 @@
     <Compile Include="SessionCtrl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transactions\TR\t3320_FinanceTR.cs" />
     <Compile Include="Transactions\XADataAdapter.cs" />
     <Compile Include="Transactions\TR\t8430_StockListTR.cs" />
     <EmbeddedResource Include="Forms\LoginForm.resx">
@@ -151,6 +152,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Res\t3320.res" />
     <None Include="Res\t8430.res" />
   </ItemGroup>
   <ItemGroup>
