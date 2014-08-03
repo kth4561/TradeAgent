@@ -18,6 +18,28 @@ namespace TradeAgent.Transactions
         protected Hashtable input = null;
         protected string resName;
 
+        #region COM Interface
+        int dwCookie = 0;
+        IConnectionPoint icp;
+        IConnectionPointContainer icpc;
+        #endregion
+
+        ~XADataAdapter()
+        {
+            if (dwCookie != -1)
+            {
+                try
+                {
+                    icp.Unadvise(dwCookie);
+                }
+                catch (System.Runtime.InteropServices.InvalidComObjectException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+            }
+            
+        }
         public void request(Hashtable ht)
         {
             // null이면 진행중이 아님.
@@ -27,7 +49,6 @@ namespace TradeAgent.Transactions
                 ICollection keys = input.Keys;
                 foreach (object key in keys)
                 {
-                    Console.WriteLine(key + " : " + input[key]);
                     query.SetFieldData(resName + "InBlock", key.ToString(), 0, input[key].ToString());
                 }
                 query.Request(false);
@@ -41,10 +62,6 @@ namespace TradeAgent.Transactions
         /// </summary>
         public IXAQuery getTR()
         {
-            int dwCookie = 0;
-            IConnectionPoint icp;
-            IConnectionPointContainer icpc;
-
             IXAQuery query = new XAQuery();
             query.ResFileName = @"\Res\" + resName + ".res";
             icpc = (IConnectionPointContainer)query;
@@ -60,10 +77,6 @@ namespace TradeAgent.Transactions
         /// </summary>
         private IXAReal getReal()
         {
-            IConnectionPoint icp;
-            IConnectionPointContainer icpc;
-
-            ////            S3_.res; 용도?
             int dwCookie = 0;
             IXAReal real = new XAReal();
             //real.ResFileName = "Res\\" + resName + ".res";     //KOSPI체결

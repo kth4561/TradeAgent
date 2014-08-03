@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Collections;
-using TradeAgent;
 using TradeAgent.Model;
 using TradeAgent.Transactions.TR;
+using System.Threading;
 
 namespace TradeAgent.Forms
 {
@@ -17,6 +12,7 @@ namespace TradeAgent.Forms
     {
         SessionCtrl session;        // 섹션
         List<Stock> stocks;         // 종목 정보
+        int index = 0;              // 검색 인덱스
 
         public MainForm()
         {
@@ -45,28 +41,37 @@ namespace TradeAgent.Forms
             rbConsole.Write("[종목조회] ", Color.GreenYellow);
             rbConsole.Write("총 ");
             rbConsole.Write(data.Count.ToString(), Color.Red);
-            rbConsole.WriteLine(" 건 조회완료");
-
-
-            rbConsole.WriteLine(data[0].hname + "----" + data[0].shcode);
-            //rbConsole.Write("[재무조회] ", Color.GreenYellow);
-            //t3320_FinanceTR tr = new t3320_FinanceTR();
-            //tr.OnReceiveComplete += OnReceiveStockFinance;
-            //Hashtable ht = new Hashtable();
-            //ht.Add("gubun", 0);
-            //tr.request(ht);
-            //rbConsole.WriteLine("조회 중...");
-
+            rbConsole.Write(" 건 ");
+            rbConsole.WriteLine(" 완료", Color.Violet);
+            stocks = data;
+            getStockFinance(stocks[index]);
         }
 
-        void OnReceiveStockFinance(List<Stock> data)
+        void getStockFinance(Stock stock)
         {
-            //rbConsole.Write("[재무조회] ", Color.GreenYellow);
-            //rbConsole.Write("총 ");
-            //rbConsole.Write(data.Count.ToString(), Color.Red);
-            //rbConsole.WriteLine(" 건 조회완료");
-
+            rbConsole.Write("[재무-" + stock.hname + "] ", Color.GreenYellow);
+            t3320_FinanceTR tr = new t3320_FinanceTR(); 
+            tr.OnReceiveComplete += OnReceiveStockFinance;
+            Hashtable ht = new Hashtable();
+            ht.Add("gicode", stock.shcode);
+            tr.request(ht);
+            rbConsole.Write("조회 중...");
         }
 
+        void OnReceiveStockFinance(StockFinance data)
+        {
+            rbConsole.WriteLine(" 완료", Color.Violet);
+            if (stocks.Count-1 > index)
+            {
+                Thread.Sleep(1000);
+                Stock stock = stocks[++index];
+                stock.finance = data;
+                getStockFinance(stock);
+            }
+            else
+            {
+                rbConsole.Write("전부다 완료", Color.Red);
+            }
+        }
     }
 }

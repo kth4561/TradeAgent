@@ -118,6 +118,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Model\Stock.cs" />
+    <Compile Include="Model\StockFinance.cs" />
     <Compile Include="SessionCtrl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
