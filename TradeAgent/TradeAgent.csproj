@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EBF83C91-D3C4-42A0-B55A-CECBA1C78F42}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TradeAgent</RootNamespace>
     <AssemblyName>TradeAgent</AssemblyName>
@@ -122,6 +122,8 @@
     <Compile Include="SessionCtrl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transactions\TR\t1404_BadStockListTR.cs" />
+    <Compile Include="Transactions\TR\t1405_MoreBadStockListTR.cs" />
     <Compile Include="Transactions\TR\t3320_FinanceTR.cs" />
     <Compile Include="Transactions\XADataAdapter.cs" />
     <Compile Include="Transactions\TR\t8430_StockListTR.cs" />

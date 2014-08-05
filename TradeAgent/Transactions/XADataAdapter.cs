@@ -14,7 +14,7 @@ namespace TradeAgent.Transactions
         public static int KOSDAQ = 2;
         #endregion
 
-        protected IXAQuery query;
+        protected XAQuery query;
         protected Hashtable input = null;
         protected string resName;
 
@@ -60,9 +60,9 @@ namespace TradeAgent.Transactions
         /// 쿼리를 등록하고 해당 객체를 리턴한다.
         /// 서버와 통신하기 위한 포맷을 맞추는 작업 정도로 이해하면 된다.
         /// </summary>
-        public IXAQuery getTR()
+        public XAQuery getTR()
         {
-            IXAQuery query = new XAQuery();
+            XAQuery query = new XAQuery();
             query.ResFileName = @"\Res\" + resName + ".res";
             icpc = (IConnectionPointContainer)query;
             Guid IID_QueryEvents = typeof(_IXAQueryEvents).GUID;

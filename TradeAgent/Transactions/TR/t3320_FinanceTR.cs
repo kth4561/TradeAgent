@@ -23,7 +23,6 @@ namespace TradeAgent.Transactions.TR
             string outblock = resName + "OutBlock";
             string outblock1 = resName + "OutBlock1";
 
-            int count = query.GetBlockCount(outblock);
             StockFinance stock = new StockFinance();
             //t3320OutBlock
             //업종구분명,upgubunnm,upgubunnm,char,20;
@@ -56,36 +55,33 @@ namespace TradeAgent.Transactions.TR
             //최근분기년도,t_gsym,t_gsym,char,6;
             try
             {
-                for (int i = 0; i < count; i++)
-                {
-                    stock.upgubunnm = query.GetFieldData(outblock, "upgubunnm", i);
-                    stock.gsym = query.GetFieldData(outblock, "gsym", i);
-                    stock.gstock = Convert.ToInt64(query.GetFieldData(outblock, "gstock", i));
-                    stock.foreignratio = Convert.ToSingle(query.GetFieldData(outblock, "foreignratio", i));
-                    stock.capital = Convert.ToSingle(query.GetFieldData(outblock, "capital", i));
-                    stock.sigavalue = Convert.ToSingle(query.GetFieldData(outblock, "sigavalue", i));
-                    stock.cashsis = Convert.ToSingle(query.GetFieldData(outblock, "cashsis", i));
-                    stock.cashrate = Convert.ToSingle(query.GetFieldData(outblock, "cashrate", i));
-                    stock.price = Convert.ToInt32(query.GetFieldData(outblock, "price", i));
+                stock.upgubunnm = query.GetFieldData(outblock, "upgubunnm", 0);
+                stock.gsym = query.GetFieldData(outblock, "gsym", 0);
+                stock.gstock = Convert.ToInt64(query.GetFieldData(outblock, "gstock", 0));
+                stock.foreignratio = Convert.ToSingle(query.GetFieldData(outblock, "foreignratio", 0));
+                stock.capital = Convert.ToSingle(query.GetFieldData(outblock, "capital", 0));
+                stock.sigavalue = Convert.ToSingle(query.GetFieldData(outblock, "sigavalue", 0));
+                stock.cashsis = Convert.ToSingle(query.GetFieldData(outblock, "cashsis", 0));
+                stock.cashrate = Convert.ToSingle(query.GetFieldData(outblock, "cashrate", 0));
+                stock.price = Convert.ToInt32(query.GetFieldData(outblock, "price", 0));
 
 
-                    stock.gsgb = query.GetFieldData(outblock1, "gsgb", i);
-                    stock.per = Convert.ToSingle(query.GetFieldData(outblock1, "per", i));
-                    stock.eps = Convert.ToSingle(query.GetFieldData(outblock1, "eps", i));
-                    stock.pbr = Convert.ToSingle(query.GetFieldData(outblock1, "pbr", i));
-                    stock.roa = Convert.ToSingle(query.GetFieldData(outblock1, "roa", i));
-                    stock.roe = Convert.ToSingle(query.GetFieldData(outblock1, "roe", i));
-                    stock.ebitda = Convert.ToSingle(query.GetFieldData(outblock1, "ebitda", i));
-                    stock.evebitda = Convert.ToSingle(query.GetFieldData(outblock1, "evebitda", i));
-                    stock.sps = Convert.ToSingle(query.GetFieldData(outblock1, "sps", i));
-                    stock.cps = Convert.ToSingle(query.GetFieldData(outblock1, "cps", i));
-                    stock.bps = Convert.ToSingle(query.GetFieldData(outblock1, "bps", i));
-                    stock.peg = Convert.ToSingle(query.GetFieldData(outblock1, "peg", i));
-                    stock.t_per = Convert.ToSingle(query.GetFieldData(outblock1, "t_per", i));
-                    stock.t_eps = Convert.ToSingle(query.GetFieldData(outblock1, "t_eps", i));
-                    stock.t_peg = Convert.ToSingle(query.GetFieldData(outblock1, "t_peg", i));
-                    stock.t_gsym = Convert.ToSingle(query.GetFieldData(outblock1, "t_gsym", i));
-                }
+                stock.gsgb = query.GetFieldData(outblock1, "gsgb", 0);
+                stock.per = Convert.ToSingle(query.GetFieldData(outblock1, "per", 0));
+                stock.eps = Convert.ToSingle(query.GetFieldData(outblock1, "eps", 0));
+                stock.pbr = Convert.ToSingle(query.GetFieldData(outblock1, "pbr", 0));
+                stock.roa = Convert.ToSingle(query.GetFieldData(outblock1, "roa", 0));
+                stock.roe = Convert.ToSingle(query.GetFieldData(outblock1, "roe", 0));
+                stock.ebitda = Convert.ToSingle(query.GetFieldData(outblock1, "ebitda", 0));
+                stock.evebitda = Convert.ToSingle(query.GetFieldData(outblock1, "evebitda", 0));
+                stock.sps = Convert.ToSingle(query.GetFieldData(outblock1, "sps", 0));
+                stock.cps = Convert.ToSingle(query.GetFieldData(outblock1, "cps", 0));
+                stock.bps = Convert.ToSingle(query.GetFieldData(outblock1, "bps", 0));
+                stock.peg = Convert.ToSingle(query.GetFieldData(outblock1, "peg", 0));
+                stock.t_per = Convert.ToSingle(query.GetFieldData(outblock1, "t_per", 0));
+                stock.t_eps = Convert.ToSingle(query.GetFieldData(outblock1, "t_eps", 0));
+                stock.t_peg = Convert.ToSingle(query.GetFieldData(outblock1, "t_peg", 0));
+                stock.t_gsym = Convert.ToSingle(query.GetFieldData(outblock1, "t_gsym", 0));
             }
             catch (System.FormatException e)
             {

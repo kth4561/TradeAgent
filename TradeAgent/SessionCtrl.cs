@@ -13,7 +13,7 @@ namespace TradeAgent
     public class SessionCtrl : _IXASessionEvents
     {
         //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private IXASession m_Session;
+        private XASession m_Session;
         public static readonly string REAR_SERVER_URL = "hts.etrade.co.kr";
         public static readonly string SIMUL_SERVER_URL = "demo.etrade.co.kr";
 
@@ -49,7 +49,7 @@ namespace TradeAgent
         /// </summary>
         /// <returns>생성된 세션 객체</returns>
         private XASession getSession(){
-            int dwCookie=0;
+            int dwCookie = 0;
             IConnectionPoint icp;
             IConnectionPointContainer icpc;
 
