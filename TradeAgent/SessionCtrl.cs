@@ -58,7 +58,7 @@ namespace TradeAgent
             Guid IID_SessionEvents = typeof(_IXASessionEvents).GUID;
             icpc.FindConnectionPoint(ref IID_SessionEvents, out icp);
             icp.Advise(this, out dwCookie);
-
+            
             Console.WriteLine("세션 생성시 Advise의 호출 결과 dwCookie는 " + dwCookie);
             return session;
         }

@@ -99,6 +99,9 @@ namespace TradeAgent.Forms
 
         void OnReceiveStock(List<Stock> stocks)
         {
+            // 기본적으로 추출할 종목 정보 정리 완료
+            new Dao.StockDao().insert(stocks);
+            
             Stock stock;
             for (int i = stocks.Count - 1; i > 0; i--)
             {
@@ -114,7 +117,9 @@ namespace TradeAgent.Forms
                 }
             }
             this.stocks = stocks;
+            
 
+            
             rbConsole.Write(" - 불량종목 : 총 ");
             rbConsole.Write(badStocks.Count.ToString(), Color.Red);
             rbConsole.WriteLine(" 건 제외");
@@ -128,6 +133,9 @@ namespace TradeAgent.Forms
             rbConsole.WriteLine(" 건");
             rbConsole.WriteLine("[재무정보조회] ", Color.GreenYellow);
             
+            
+
+
             getStockFinance(stocks[index]);
         }
 
