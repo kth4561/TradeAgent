@@ -18,7 +18,7 @@ namespace TradeAgent.Dao
             {
                 conn.Open();
 
-                string sql = "INSERT OR REPLACE INTO TB_STOCK (shcode, hname, expcode, etfgubun, uplmtprice, dnlmtprice, jnilclose, memedan, recprice, gubun) VALUES (:shcode, :hname, :expcode, :etfgubun, :uplmtprice, :dnlmtprice, :jnilclose, :memedan, :recprice, :gubun)";
+                string sql = "INSERT OR REPLACE INTO TB_STOCK (shcode, hname, expcode, etfgubun, uplmtprice, dnlmtprice, jnilclose, memedan, recprice, gubun, isbad) VALUES (:shcode, :hname, :expcode, :etfgubun, :uplmtprice, :dnlmtprice, :jnilclose, :memedan, :recprice, :gubun, :isbad)";
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.Parameters.Add("shcode", DbType.String);
@@ -31,6 +31,7 @@ namespace TradeAgent.Dao
                     cmd.Parameters.Add("memedan", DbType.Int64);
                     cmd.Parameters.Add("recprice", DbType.Int64);
                     cmd.Parameters.Add("gubun", DbType.Int32);
+                    cmd.Parameters.Add("isbad", DbType.Boolean);
 
                     using (SQLiteTransaction tx = conn.BeginTransaction())
                     {
@@ -48,6 +49,7 @@ namespace TradeAgent.Dao
                             cmd.Parameters["memedan"].Value = stock.memedan;
                             cmd.Parameters["recprice"].Value = stock.recprice;
                             cmd.Parameters["gubun"].Value = stock.gubun;
+                            cmd.Parameters["isbad"].Value = stock.isBad;
                             cmd.ExecuteNonQuery();
                         }
                         tx.Commit();

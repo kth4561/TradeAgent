@@ -5,8 +5,18 @@ using System.Text;
 
 namespace TradeAgent.Model
 {
-    public class Stock
+    public class Stock : IEquatable<Stock>
     {
+        public Stock()
+        {
+
+        }
+
+        public Stock(string shcode)
+        {
+            this.shcode = shcode;
+        }
+
         ////////////////
         /// t8430
         ////////////////
@@ -31,7 +41,46 @@ namespace TradeAgent.Model
         public long memedan;
         public long recprice;
         public int gubun;
-
+        
+        public bool isBad;
         public StockFinance finance;
+
+        public bool Equals(Stock stock)
+        {
+            if (stock == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (this.shcode.Equals(stock.shcode))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            else
+            {
+                Stock stockobj = obj as Stock;
+                if (stockobj == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return Equals(stockobj);
+                }
+            }
+        }
 	}
 }

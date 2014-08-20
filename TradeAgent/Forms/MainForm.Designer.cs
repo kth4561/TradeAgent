@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.rbConsole = new TradeAgent.Control.RichTextBoxEx();
+            this.btSync = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // rbConsole
@@ -42,11 +43,22 @@
             this.rbConsole.TabIndex = 0;
             this.rbConsole.Text = "";
             // 
+            // btSync
+            // 
+            this.btSync.Location = new System.Drawing.Point(618, 13);
+            this.btSync.Name = "btSync";
+            this.btSync.Size = new System.Drawing.Size(99, 23);
+            this.btSync.TabIndex = 1;
+            this.btSync.Text = "데이터 조회";
+            this.btSync.UseVisualStyleBackColor = true;
+            this.btSync.Click += new System.EventHandler(this.btSync_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(722, 402);
+            this.Controls.Add(this.btSync);
             this.Controls.Add(this.rbConsole);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -59,5 +71,6 @@
 
 //        private System.Windows.Forms.RichTextBox rbConsole;
         private TradeAgent.Control.RichTextBoxEx rbConsole;
+        private System.Windows.Forms.Button btSync;
     }
 }
