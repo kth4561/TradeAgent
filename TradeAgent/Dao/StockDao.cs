@@ -17,12 +17,12 @@ namespace TradeAgent.Dao
             using (SQLiteConnection conn = new SQLiteConnection(DB))
             {
                 conn.Open();
-                
-                string sql = "INSERT INTO TB_STOCK (hname, shcode, expcode, etfgubun, uplmtprice, dnlmtprice, jnilclose, memedan, recprice, gubun) VALUES (:hname, :shcode, :expcode, :etfgubun, :uplmtprice, :dnlmtprice, :jnilclose, :memedan, :recprice, :gubun)";
+
+                string sql = "INSERT OR REPLACE INTO TB_STOCK (shcode, hname, expcode, etfgubun, uplmtprice, dnlmtprice, jnilclose, memedan, recprice, gubun) VALUES (:shcode, :hname, :expcode, :etfgubun, :uplmtprice, :dnlmtprice, :jnilclose, :memedan, :recprice, :gubun)";
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
-                    cmd.Parameters.Add("hname", DbType.String);
                     cmd.Parameters.Add("shcode", DbType.String);
+                    cmd.Parameters.Add("hname", DbType.String);
                     cmd.Parameters.Add("expcode", DbType.String);
                     cmd.Parameters.Add("etfgubun", DbType.Boolean);
                     cmd.Parameters.Add("uplmtprice", DbType.Int64);
@@ -38,8 +38,8 @@ namespace TradeAgent.Dao
 
                         foreach (Stock stock in stocks)
                         {
-                            cmd.Parameters["hname"].Value = stock.hname;
                             cmd.Parameters["shcode"].Value = stock.shcode;
+                            cmd.Parameters["hname"].Value = stock.hname;
                             cmd.Parameters["expcode"].Value = stock.expcode;
                             cmd.Parameters["etfgubun"].Value = stock.etfgubun;
                             cmd.Parameters["uplmtprice"].Value = stock.uplmtprice;
