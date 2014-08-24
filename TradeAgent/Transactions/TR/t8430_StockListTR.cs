@@ -37,7 +37,6 @@ namespace TradeAgent.Transactions.TR
             //구분(1:코스피2:코스닥),gubun,gubun,char,1;
             for (int i = 0; i < count; i++)
             {
-                //Console.WriteLine(i + " : " + query.GetFieldData(resName + "OutBlock", "hname", i));
                 stock = new Stock();
                 stock.hname = query.GetFieldData(outblock, "hname", i);
                 stock.shcode = query.GetFieldData(outblock, "shcode", i);
@@ -49,6 +48,9 @@ namespace TradeAgent.Transactions.TR
                 stock.memedan = Convert.ToInt64(query.GetFieldData(outblock, "memedan", i));
                 stock.recprice = Convert.ToInt64(query.GetFieldData(outblock, "recprice", i));
                 stock.gubun = Convert.ToInt32(query.GetFieldData(outblock, "gubun", i));
+                stock.isPreferred = !stock.shcode.Substring(stock.shcode.Length - 1).Equals("0");
+                //Console.WriteLine(stock.shcode.Substring(stock.shcode.Length - 1) + " : " + stock.shcode + " : " + stock.hname + " : " + stock.isPreferred + " : " + (!stock.shcode.Substring(stock.shcode.Length - 1).Equals("0")));
+                
                 data.Add(stock);
             }
 

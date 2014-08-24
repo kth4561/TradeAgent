@@ -9,7 +9,7 @@ namespace TradeAgent.Transactions.TR
 {
     class t3320_FinanceTR : XADataAdapter, _IXAQueryEvents
     {
-        public delegate void OnReceiveDataComplete(StockFinance data);
+        public delegate void OnReceiveDataComplete(Stock data);
         public event OnReceiveDataComplete OnReceiveComplete;
 
         public t3320_FinanceTR()
@@ -22,8 +22,11 @@ namespace TradeAgent.Transactions.TR
         {
             string outblock = resName + "OutBlock";
             string outblock1 = resName + "OutBlock1";
+            string shcode = query.GetFieldData(outblock1, "gicode", 0);
+            
 
-            StockFinance stock = new StockFinance();
+            Stock stock = null;
+            
             //t3320OutBlock
             //업종구분명,upgubunnm,upgubunnm,char,20;
             //최근결산년월,gsym,gsym,char,6;
@@ -53,43 +56,45 @@ namespace TradeAgent.Transactions.TR
             //PEG,peg,peg,float,13.2;
             //T.PEG,t_peg,t_peg,float,13.2;
             //최근분기년도,t_gsym,t_gsym,char,6;
-            try
+            if (!"".Equals(shcode))
             {
-                stock.upgubunnm = query.GetFieldData(outblock, "upgubunnm", 0);
-                stock.gsym = query.GetFieldData(outblock, "gsym", 0);
-                stock.gstock = Convert.ToInt64(query.GetFieldData(outblock, "gstock", 0));
-                stock.foreignratio = Convert.ToSingle(query.GetFieldData(outblock, "foreignratio", 0));
-                stock.capital = Convert.ToSingle(query.GetFieldData(outblock, "capital", 0));
-                stock.sigavalue = Convert.ToSingle(query.GetFieldData(outblock, "sigavalue", 0));
-                stock.cashsis = Convert.ToSingle(query.GetFieldData(outblock, "cashsis", 0));
-                stock.cashrate = Convert.ToSingle(query.GetFieldData(outblock, "cashrate", 0));
-                stock.price = Convert.ToInt32(query.GetFieldData(outblock, "price", 0));
+                try
+                {
+                    stock = new Stock(query.GetFieldData(outblock1, "gicode", 0).Substring(1));
+                    stock.upgubunnm = query.GetFieldData(outblock, "upgubunnm", 0);
+                    stock.gsym = query.GetFieldData(outblock, "gsym", 0);
+                    stock.gstock = Convert.ToInt64(query.GetFieldData(outblock, "gstock", 0));
+                    stock.foreignratio = Convert.ToSingle(query.GetFieldData(outblock, "foreignratio", 0));
+                    stock.capital = Convert.ToSingle(query.GetFieldData(outblock, "capital", 0));
+                    stock.sigavalue = Convert.ToSingle(query.GetFieldData(outblock, "sigavalue", 0));
+                    stock.cashsis = Convert.ToSingle(query.GetFieldData(outblock, "cashsis", 0));
+                    stock.cashrate = Convert.ToSingle(query.GetFieldData(outblock, "cashrate", 0));
+                    stock.price = Convert.ToInt32(query.GetFieldData(outblock, "price", 0));
 
-
-                stock.gsgb = query.GetFieldData(outblock1, "gsgb", 0);
-                stock.per = Convert.ToSingle(query.GetFieldData(outblock1, "per", 0));
-                stock.eps = Convert.ToSingle(query.GetFieldData(outblock1, "eps", 0));
-                stock.pbr = Convert.ToSingle(query.GetFieldData(outblock1, "pbr", 0));
-                stock.roa = Convert.ToSingle(query.GetFieldData(outblock1, "roa", 0));
-                stock.roe = Convert.ToSingle(query.GetFieldData(outblock1, "roe", 0));
-                stock.ebitda = Convert.ToSingle(query.GetFieldData(outblock1, "ebitda", 0));
-                stock.evebitda = Convert.ToSingle(query.GetFieldData(outblock1, "evebitda", 0));
-                stock.sps = Convert.ToSingle(query.GetFieldData(outblock1, "sps", 0));
-                stock.cps = Convert.ToSingle(query.GetFieldData(outblock1, "cps", 0));
-                stock.bps = Convert.ToSingle(query.GetFieldData(outblock1, "bps", 0));
-                stock.peg = Convert.ToSingle(query.GetFieldData(outblock1, "peg", 0));
-                stock.t_per = Convert.ToSingle(query.GetFieldData(outblock1, "t_per", 0));
-                stock.t_eps = Convert.ToSingle(query.GetFieldData(outblock1, "t_eps", 0));
-                stock.t_peg = Convert.ToSingle(query.GetFieldData(outblock1, "t_peg", 0));
-                stock.t_gsym = Convert.ToSingle(query.GetFieldData(outblock1, "t_gsym", 0));
-            }
-            catch (System.FormatException e)
-            {
-                //Console.WriteLine(e.Message);
+                    stock.gsgb = query.GetFieldData(outblock1, "gsgb", 0);
+                    stock.per = Convert.ToSingle(query.GetFieldData(outblock1, "per", 0));
+                    stock.eps = Convert.ToSingle(query.GetFieldData(outblock1, "eps", 0));
+                    stock.pbr = Convert.ToSingle(query.GetFieldData(outblock1, "pbr", 0));
+                    stock.roa = Convert.ToSingle(query.GetFieldData(outblock1, "roa", 0));
+                    stock.roe = Convert.ToSingle(query.GetFieldData(outblock1, "roe", 0));
+                    stock.ebitda = Convert.ToSingle(query.GetFieldData(outblock1, "ebitda", 0));
+                    stock.evebitda = Convert.ToSingle(query.GetFieldData(outblock1, "evebitda", 0));
+                    stock.sps = Convert.ToSingle(query.GetFieldData(outblock1, "sps", 0));
+                    stock.cps = Convert.ToSingle(query.GetFieldData(outblock1, "cps", 0));
+                    stock.bps = Convert.ToSingle(query.GetFieldData(outblock1, "bps", 0));
+                    stock.peg = Convert.ToSingle(query.GetFieldData(outblock1, "peg", 0));
+                    stock.t_per = Convert.ToSingle(query.GetFieldData(outblock1, "t_per", 0));
+                    stock.t_eps = Convert.ToSingle(query.GetFieldData(outblock1, "t_eps", 0));
+                    stock.t_peg = Convert.ToSingle(query.GetFieldData(outblock1, "t_peg", 0));
+                    stock.t_gsym = Convert.ToSingle(query.GetFieldData(outblock1, "t_gsym", 0));
+                }
+                catch (System.FormatException e)
+                {
+                    //Console.WriteLine(e.Message);
+                }
             }
             
             // 데이터 처리가 완료되면 
-            input = null;
             if (OnReceiveComplete != null)
             {
                 OnReceiveComplete.Invoke(stock);

@@ -15,7 +15,7 @@ namespace TradeAgent.Forms
         //Dictionary<string, Stock> etf = new Dictionary<string, Stock>();    // etf
         //List<string> badStocks=new List<string>();     // 나쁜 종목
         
-        int index = 0;              // 검색 인덱스 (임시)
+        int gTmpindex = 0;              // 검색 인덱스 (임시)
 
         public MainForm()
         {
@@ -86,6 +86,9 @@ namespace TradeAgent.Forms
                 new Dao.StockDao().insert(this.stocks);
                 rbConsole.Write(this.stocks.Count.ToString(), Color.Red);
                 rbConsole.WriteLine(" 건 반영완료");
+
+
+                getStockFinance(this.stocks[gTmpindex]);
             }
         }
 
@@ -139,46 +142,62 @@ namespace TradeAgent.Forms
             //rbConsole.Write(this.stocks.Count.ToString(), Color.Red);
             //rbConsole.WriteLine(" 건");
             //rbConsole.WriteLine("[재무정보조회] ", Color.GreenYellow);
-            
-            
 
 
-            //getStockFinance(stocks[index]);
+
+
         }
 
-        //void getStockFinance(Stock stock)
-        //{   
-        //    rbConsole.Write(" " + index + ") '" + stock.hname + "' 조회 중...");
-        //    t3320_FinanceTR tr = new t3320_FinanceTR();
-        //    tr.OnReceiveComplete += OnReceiveStockFinance;
-        //    Hashtable ht = new Hashtable();
-        //    ht.Add("gicode", stock.shcode);
-        //    tr.request(ht);
-        //}
+        // 종목의 재무정보 단건 조회
+        void getStockFinance(Stock stock)
+        {
+            if (stock.isPreferred || stock.isBad)
+            {
+                if (stock.isPreferred)
+                {
+                    rbConsole.WriteLine(" " + gTmpindex + ") '" + stock.hname + "' 우선주 재무 정보 조회에서 제외");
+                }
+                else if (stock.isBad)
+                {
+                    rbConsole.WriteLine(" " + gTmpindex + ") '" + stock.hname + "' 불량종목 재무 정보 조회에서 제외");
+                }
+                getStockFinance(this.stocks[++gTmpindex]);
+            }
+            else
+            {
+                rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + ": " + stock.shcode + "' 조회 중...");
+                t3320_FinanceTR tr = new t3320_FinanceTR();
+                tr.OnReceiveComplete += OnReceiveStockFinance;
+                Hashtable ht = new Hashtable();
+                ht.Add("gicode", stock.shcode);
+                tr.request(ht);
+            }
+        }
 
-        //void OnReceiveStockFinance(StockFinance data)
-        //{
-        //    rbConsole.WriteLine(" 완료", Color.Violet);
-        //    if (index < 10)
-        //    //if (stocks.Count - 1 > index)
-        //    {
-        //        Thread.Sleep(1000);
-        //        Stock stock = stocks[++index];
-        //        stock.finance = data;
-        //        getStockFinance(stock);
-        //    }
-        //    else
-        //    {
-        //        rbConsole.Write("[재무]",  Color.GreenYellow);
-        //        rbConsole.Write(" 조회");
-        //        rbConsole.WriteLine(" 완료",  Color.Violet);
-        //    }
-        //}
+        void OnReceiveStockFinance(Stock stockfnc)
+        {
+            rbConsole.WriteLine(" 완료", Color.Violet);
+            //if (gTmpindex < 10)
+            if (stocks.Count - 1 > gTmpindex)
+            {
+                Thread.Sleep(1000);
+                Stock stock = this.stocks[++gTmpindex];
+                stock.Merge(stockfnc);
+                getStockFinance(stock);
+            }
+            else
+            {
+                rbConsole.Write("[재무]", Color.GreenYellow);
+                rbConsole.Write(" 조회");
+                rbConsole.WriteLine(" 완료", Color.Violet);
+            }
+        }
 
         private void btSync_Click(object sender, System.EventArgs e)
         {
             //rbConsole.WriteLine("[불량종목] ", Color.GreenYellow);
             //requestBadStock(1);
+            gTmpindex = 0;
             requestStocks();
         }
 
