@@ -151,7 +151,7 @@ namespace TradeAgent.Forms
         // 종목의 재무정보 단건 조회
         void getStockFinance(Stock stock)
         {
-            if (stock.isPreferred || stock.isBad)
+            if (stock.isPreferred || stock.isBad || stock.etfgubun)
             {
                 if (stock.isPreferred)
                 {
@@ -181,18 +181,16 @@ namespace TradeAgent.Forms
 
         void OnReceiveStockFinance(StockFinance stockfnc)
         {
+            Stock stock = this.stocks[gTmpindex];
+            stock.finance = stockfnc;
+            // 종목 정보 DB 갱신
+            new Dao.StockFinanceDao().insert(stock);
+            rbConsole.WriteLine(" 완료", Color.Violet);
+           
             //if (gTmpindex < 10)
             if (stocks.Count - 1 > gTmpindex)
             {
                 Thread.Sleep(1000);
-                Stock stock = this.stocks[gTmpindex];
-                stock.finance = stockfnc;
-                // 종목 정보 DB 갱신
-                //rbConsole.Write("[DB반영] ", Color.GreenYellow);
-                //rbConsole.Write(stock.hname);
-                new Dao.StockFinanceDao().insert(stock);
-                rbConsole.WriteLine(" 완료", Color.Violet);
-           
                 getStockFinance(this.stocks[++gTmpindex]);
             }
             else
