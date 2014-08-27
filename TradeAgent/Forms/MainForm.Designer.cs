@@ -39,17 +39,18 @@
             this.rbConsole.Location = new System.Drawing.Point(12, 12);
             this.rbConsole.Name = "rbConsole";
             this.rbConsole.ReadOnly = true;
-            this.rbConsole.Size = new System.Drawing.Size(599, 378);
+            this.rbConsole.Size = new System.Drawing.Size(599, 515);
             this.rbConsole.TabIndex = 0;
             this.rbConsole.Text = "";
+            this.rbConsole.TextChanged += new System.EventHandler(this.rbConsole_TextChanged);
             // 
             // btSync
             // 
             this.btSync.Location = new System.Drawing.Point(618, 13);
             this.btSync.Name = "btSync";
-            this.btSync.Size = new System.Drawing.Size(99, 23);
+            this.btSync.Size = new System.Drawing.Size(125, 23);
             this.btSync.TabIndex = 1;
-            this.btSync.Text = "데이터 조회";
+            this.btSync.Text = "종목정보 동기화";
             this.btSync.UseVisualStyleBackColor = true;
             this.btSync.Click += new System.EventHandler(this.btSync_Click);
             // 
@@ -57,7 +58,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(722, 402);
+            this.ClientSize = new System.Drawing.Size(747, 539);
             this.Controls.Add(this.btSync);
             this.Controls.Add(this.rbConsole);
             this.Name = "MainForm";

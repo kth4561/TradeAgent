@@ -155,17 +155,22 @@ namespace TradeAgent.Forms
             {
                 if (stock.isPreferred)
                 {
-                    rbConsole.WriteLine(" " + gTmpindex + ") '" + stock.hname + "' 우선주 재무 정보 조회에서 제외");
+                    rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + "' 우선주는", Color.Gray);
                 }
                 else if (stock.isBad)
                 {
-                    rbConsole.WriteLine(" " + gTmpindex + ") '" + stock.hname + "' 불량종목 재무 정보 조회에서 제외");
+                    rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + "' 불량종목은", Color.Gray);
                 }
+                else if (stock.etfgubun)
+                {
+                    rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + "' ETF는", Color.Gray);
+                }
+                rbConsole.WriteLine(" 재무 정보 조회에서 제외", Color.Gray);
                 getStockFinance(this.stocks[++gTmpindex]);
             }
             else
             {
-                rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + ": " + stock.shcode + "' 조회 중...");
+                rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + "(" + stock.shcode + ")' 조회 중...");
                 t3320_FinanceTR tr = new t3320_FinanceTR();
                 tr.OnReceiveComplete += OnReceiveStockFinance;
                 Hashtable ht = new Hashtable();
@@ -174,16 +179,21 @@ namespace TradeAgent.Forms
             }
         }
 
-        void OnReceiveStockFinance(Stock stockfnc)
+        void OnReceiveStockFinance(StockFinance stockfnc)
         {
-            rbConsole.WriteLine(" 완료", Color.Violet);
             //if (gTmpindex < 10)
             if (stocks.Count - 1 > gTmpindex)
             {
                 Thread.Sleep(1000);
-                Stock stock = this.stocks[++gTmpindex];
-                stock.Merge(stockfnc);
-                getStockFinance(stock);
+                Stock stock = this.stocks[gTmpindex];
+                stock.finance = stockfnc;
+                // 종목 정보 DB 갱신
+                //rbConsole.Write("[DB반영] ", Color.GreenYellow);
+                //rbConsole.Write(stock.hname);
+                new Dao.StockFinanceDao().insert(stock);
+                rbConsole.WriteLine(" 완료", Color.Violet);
+           
+                getStockFinance(this.stocks[++gTmpindex]);
             }
             else
             {
@@ -212,6 +222,11 @@ namespace TradeAgent.Forms
                     this.stocks[index].isBad = true;
                 }
             }
+        }
+
+        private void rbConsole_TextChanged(object sender, System.EventArgs e)
+        {
+            rbConsole.ScrollToCaret();
         }
     }
 }

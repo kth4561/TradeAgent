@@ -9,7 +9,7 @@ namespace TradeAgent.Transactions.TR
 {
     class t3320_FinanceTR : XADataAdapter, _IXAQueryEvents
     {
-        public delegate void OnReceiveDataComplete(Stock data);
+        public delegate void OnReceiveDataComplete(StockFinance data);
         public event OnReceiveDataComplete OnReceiveComplete;
 
         public t3320_FinanceTR()
@@ -23,10 +23,7 @@ namespace TradeAgent.Transactions.TR
             string outblock = resName + "OutBlock";
             string outblock1 = resName + "OutBlock1";
             string shcode = query.GetFieldData(outblock1, "gicode", 0);
-            
 
-            Stock stock = null;
-            
             //t3320OutBlock
             //업종구분명,upgubunnm,upgubunnm,char,20;
             //최근결산년월,gsym,gsym,char,6;
@@ -56,21 +53,22 @@ namespace TradeAgent.Transactions.TR
             //PEG,peg,peg,float,13.2;
             //T.PEG,t_peg,t_peg,float,13.2;
             //최근분기년도,t_gsym,t_gsym,char,6;
+
+            StockFinance stock = new StockFinance();
+            stock.upgubunnm = query.GetFieldData(outblock, "upgubunnm", 0);
+            stock.gsym = query.GetFieldData(outblock, "gsym", 0);
+            stock.gstock = Convert.ToInt64(query.GetFieldData(outblock, "gstock", 0));
+            stock.foreignratio = Convert.ToSingle(query.GetFieldData(outblock, "foreignratio", 0));
+            stock.capital = Convert.ToSingle(query.GetFieldData(outblock, "capital", 0));
+            stock.sigavalue = Convert.ToSingle(query.GetFieldData(outblock, "sigavalue", 0));
+            stock.cashsis = Convert.ToSingle(query.GetFieldData(outblock, "cashsis", 0));
+            stock.cashrate = Convert.ToSingle(query.GetFieldData(outblock, "cashrate", 0));
+            stock.price = Convert.ToInt32(query.GetFieldData(outblock, "price", 0));
+
             if (!"".Equals(shcode))
             {
                 try
                 {
-                    stock = new Stock(query.GetFieldData(outblock1, "gicode", 0).Substring(1));
-                    stock.upgubunnm = query.GetFieldData(outblock, "upgubunnm", 0);
-                    stock.gsym = query.GetFieldData(outblock, "gsym", 0);
-                    stock.gstock = Convert.ToInt64(query.GetFieldData(outblock, "gstock", 0));
-                    stock.foreignratio = Convert.ToSingle(query.GetFieldData(outblock, "foreignratio", 0));
-                    stock.capital = Convert.ToSingle(query.GetFieldData(outblock, "capital", 0));
-                    stock.sigavalue = Convert.ToSingle(query.GetFieldData(outblock, "sigavalue", 0));
-                    stock.cashsis = Convert.ToSingle(query.GetFieldData(outblock, "cashsis", 0));
-                    stock.cashrate = Convert.ToSingle(query.GetFieldData(outblock, "cashrate", 0));
-                    stock.price = Convert.ToInt32(query.GetFieldData(outblock, "price", 0));
-
                     stock.gsgb = query.GetFieldData(outblock1, "gsgb", 0);
                     stock.per = Convert.ToSingle(query.GetFieldData(outblock1, "per", 0));
                     stock.eps = Convert.ToSingle(query.GetFieldData(outblock1, "eps", 0));
