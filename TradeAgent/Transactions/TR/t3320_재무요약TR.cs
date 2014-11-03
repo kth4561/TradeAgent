@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using XA_DATASETLib;
-using TradeAgent.Model;
 
-namespace TradeAgent.Transactions.TR
+namespace TradeAgent.Transactions
 {
-    class t3320_FinanceTR : XADataAdapter, _IXAQueryEvents
+    class t3320_재무요약TR : XADataAdapter, _IXAQueryEvents
     {
         public delegate void OnReceiveDataComplete(StockFinance data);
         public event OnReceiveDataComplete OnReceiveComplete;
 
-        public t3320_FinanceTR()
+        public t3320_재무요약TR()
         {
             resName = "t3320";
             query = getTR();
@@ -55,21 +54,21 @@ namespace TradeAgent.Transactions.TR
             //최근분기년도,t_gsym,t_gsym,char,6;
 
             StockFinance stock = new StockFinance();
-            stock.upgubunnm = query.GetFieldData(outblock, "upgubunnm", 0);
-            stock.gsym = query.GetFieldData(outblock, "gsym", 0);
-            stock.gstock = Convert.ToInt64(query.GetFieldData(outblock, "gstock", 0));
-            stock.foreignratio = Convert.ToSingle(query.GetFieldData(outblock, "foreignratio", 0));
-            stock.capital = Convert.ToSingle(query.GetFieldData(outblock, "capital", 0));
-            stock.sigavalue = Convert.ToSingle(query.GetFieldData(outblock, "sigavalue", 0));
-            stock.cashsis = Convert.ToSingle(query.GetFieldData(outblock, "cashsis", 0));
-            stock.cashrate = Convert.ToSingle(query.GetFieldData(outblock, "cashrate", 0));
-            stock.price = Convert.ToInt32(query.GetFieldData(outblock, "price", 0));
+            stock.업종구분명 = query.GetFieldData(outblock, "upgubunnm", 0);
+            stock.최근결산년월 = query.GetFieldData(outblock, "gsym", 0);
+            stock.주식수 = Convert.ToInt64(query.GetFieldData(outblock, "gstock", 0));
+            stock.외국인비율 = Convert.ToSingle(query.GetFieldData(outblock, "foreignratio", 0));
+            stock.자본금 = Convert.ToSingle(query.GetFieldData(outblock, "capital", 0));
+            stock.시가총액 = Convert.ToSingle(query.GetFieldData(outblock, "sigavalue", 0));
+            stock.배당금 = Convert.ToSingle(query.GetFieldData(outblock, "cashsis", 0));
+            stock.배당수익율 = Convert.ToSingle(query.GetFieldData(outblock, "cashrate", 0));
+            stock.현재가 = Convert.ToInt32(query.GetFieldData(outblock, "price", 0));
 
             if (!"".Equals(shcode))
             {
                 try
                 {
-                    stock.gsgb = query.GetFieldData(outblock1, "gsgb", 0);
+                    stock.결산구분 = query.GetFieldData(outblock1, "gsgb", 0);
                     stock.per = Convert.ToSingle(query.GetFieldData(outblock1, "per", 0));
                     stock.eps = Convert.ToSingle(query.GetFieldData(outblock1, "eps", 0));
                     stock.pbr = Convert.ToSingle(query.GetFieldData(outblock1, "pbr", 0));
@@ -84,7 +83,7 @@ namespace TradeAgent.Transactions.TR
                     stock.t_per = Convert.ToSingle(query.GetFieldData(outblock1, "t_per", 0));
                     stock.t_eps = Convert.ToSingle(query.GetFieldData(outblock1, "t_eps", 0));
                     stock.t_peg = Convert.ToSingle(query.GetFieldData(outblock1, "t_peg", 0));
-                    stock.t_gsym = Convert.ToSingle(query.GetFieldData(outblock1, "t_gsym", 0));
+                    stock.최근분기년도 = Convert.ToSingle(query.GetFieldData(outblock1, "t_gsym", 0));
                 }
                 catch (System.FormatException e)
                 {

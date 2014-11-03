@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using XA_SESSIONLib;
 using System.Threading;
 
-using TradeAgent.Transactions.TR;
+using TradeAgent.Transactions;
 using XA_DATASETLib;
 
 namespace TradeAgent

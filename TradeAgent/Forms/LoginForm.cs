@@ -7,10 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using XA_DATASETLib;
-using TradeAgent.Transactions.TR;
 using System.Collections;
 
-namespace TradeAgent.Forms
+namespace TradeAgent
 {
     public partial class LoginForm : Form
     {
@@ -66,7 +65,7 @@ namespace TradeAgent.Forms
             }
             else
             {
-                MessageBox.Show("아이디와 패스워드를 입력해주세요");
+                MessageBox.Show(TradeAgent.Properties.Resources.MSG_0001);
             }
             
         }
@@ -89,8 +88,8 @@ namespace TradeAgent.Forms
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("key"));
             dt.Columns.Add(new DataColumn("value"));
-            dt.Rows.Add("모의서버", SessionCtrl.SIMUL_SERVER_URL);
-            dt.Rows.Add("실서버", SessionCtrl.REAR_SERVER_URL);
+            dt.Rows.Add(TradeAgent.Properties.Resources.REAL_SERVER_NAME, SessionCtrl.REAR_SERVER_URL);
+            dt.Rows.Add(TradeAgent.Properties.Resources.SIMUL_SERVER_NAME, SessionCtrl.SIMUL_SERVER_URL);
             cbServer.DataSource = dt;
             cbServer.DisplayMember = "key";
             cbServer.ValueMember = "value";

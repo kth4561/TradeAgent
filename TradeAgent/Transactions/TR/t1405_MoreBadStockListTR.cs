@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using XA_DATASETLib;
-using TradeAgent.Model;
 
-namespace TradeAgent.Transactions.TR
+namespace TradeAgent.Transactions
 {
     class t1405_MoreBadStockListTR : XADataAdapter, _IXAQueryEvents
     {

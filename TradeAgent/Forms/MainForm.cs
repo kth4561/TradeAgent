@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections;
-using TradeAgent.Model;
-using TradeAgent.Transactions.TR;
+using TradeAgent.Transactions;
 using System.Threading;
 
-namespace TradeAgent.Forms
+namespace TradeAgent
 {
     public partial class MainForm : Form
     {
@@ -83,7 +82,7 @@ namespace TradeAgent.Forms
                 // 종목 정보 DB 갱신
                 rbConsole.Write("[DB반영] ", Color.GreenYellow);
                 rbConsole.Write("종목 정보 : 총 ");
-                new Dao.StockDao().insert(this.stocks);
+                new StockDao().insert(this.stocks);
                 rbConsole.Write(this.stocks.Count.ToString(), Color.Red);
                 rbConsole.WriteLine(" 건 반영완료");
 
@@ -96,7 +95,7 @@ namespace TradeAgent.Forms
         void requestStocks()
         {
             rbConsole.WriteLine("[종목조회] ", Color.GreenYellow);
-            t8430_StockListTR tr = new t8430_StockListTR();
+            t8430_주식종목조회TR tr = new t8430_주식종목조회TR();
             tr.OnReceiveComplete += OnReceiveStock;
             Hashtable ht = new Hashtable();
             ht.Add("gubun", 0);
@@ -151,17 +150,17 @@ namespace TradeAgent.Forms
         // 종목의 재무정보 단건 조회
         void getStockFinance(Stock stock)
         {
-            if (stock.isPreferred || stock.isBad || stock.etfgubun)
+            if (stock.우선주여부 || stock.불량종목여부 || stock.ETF여부)
             {
-                if (stock.isPreferred)
+                if (stock.우선주여부)
                 {
                     rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + "' 우선주는", Color.Gray);
                 }
-                else if (stock.isBad)
+                else if (stock.불량종목여부)
                 {
                     rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + "' 불량종목은", Color.Gray);
                 }
-                else if (stock.etfgubun)
+                else if (stock.ETF여부)
                 {
                     rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + "' ETF는", Color.Gray);
                 }
@@ -171,7 +170,7 @@ namespace TradeAgent.Forms
             else
             {
                 rbConsole.Write(" " + gTmpindex + ") '" + stock.hname + "(" + stock.shcode + ")' 조회 중...");
-                t3320_FinanceTR tr = new t3320_FinanceTR();
+                t3320_재무요약TR tr = new t3320_재무요약TR();
                 tr.OnReceiveComplete += OnReceiveStockFinance;
                 Hashtable ht = new Hashtable();
                 ht.Add("gicode", stock.shcode);
@@ -184,7 +183,7 @@ namespace TradeAgent.Forms
             Stock stock = this.stocks[gTmpindex];
             stock.finance = stockfnc;
             // 종목 정보 DB 갱신
-            new Dao.StockFinanceDao().insert(stock);
+            new StockFinanceDao().insert(stock);
             rbConsole.WriteLine(" 완료", Color.Violet);
            
             //if (gTmpindex < 10)
@@ -217,7 +216,7 @@ namespace TradeAgent.Forms
                 index = this.stocks.IndexOf(stock);
                 if (index != -1)
                 {
-                    this.stocks[index].isBad = true;
+                    this.stocks[index].불량종목여부 = true;
                 }
             }
         }

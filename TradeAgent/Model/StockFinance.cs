@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TradeAgent.Model
+namespace TradeAgent
 {
     public class StockFinance
     {
@@ -19,7 +19,6 @@ namespace TradeAgent.Model
         //결산월,gsmm,gsmm,char,2;                --
         //최근결산년월,gsym,gsym,char,6;
         //주당액면가,lstprice,lstprice,long,12;  --
-        //주식수,gstock,gstock,long,12;
         //Homepage,homeurl,homeurl,char,50; --
         //그룹명,grdnm,grdnm,char,30;  --
         //외국인,foreignratio,foreignratio,float,6.2;
@@ -30,15 +29,15 @@ namespace TradeAgent.Model
         //배당수익율,cashrate,cashrate,float,13.2;
         //현재가,price,price,long,8;
         //전일종가,jnilclose,jnilclose,long,8; ---
-        public string upgubunnm;
-        public string gsym;
-        public long gstock;
-        public float foreignratio;
-        public float capital;
-        public float sigavalue;
-        public float cashsis;
-        public float cashrate;
-        public long price;
+        public string 업종구분명; //,upgubunnm,upgubunnm,char,20;
+        public string 최근결산년월;//,gsym,gsym,char,6;
+        public long 주식수; //,gstock,gstock,long,12;
+        public float 외국인비율; //,foreignratio,foreignratio,float,6.2;
+        public float 자본금; //,capital,capital,float,12.0;
+        public float 시가총액; //,sigavalue,sigavalue,float,12.0;
+        public float 배당금; //,cashsis,cashsis,float,12.0;
+        public float 배당수익율; //,cashrate,cashrate,float,13.2;
+        public long 현재가;  // 현재가
 
         //t3320OutBlock1,기업재무정보,output;
         //기업코드,gicode,gicode,char,7;    --
@@ -60,7 +59,7 @@ namespace TradeAgent.Model
         //PEG,peg,peg,float,13.2;
         //T.PEG,t_peg,t_peg,float,13.2;
         //최근분기년도,t_gsym,t_gsym,char,6;
-        public string gsgb;
+        public string 결산구분; // gsgb,gsgb,char,1;
         public float per;
         public float eps;
         public float pbr;
@@ -75,6 +74,6 @@ namespace TradeAgent.Model
         public float t_per;
         public float t_eps;
         public float t_peg;
-        public float t_gsym;
+        public float 최근분기년도; //,t_gsym,t_gsym,char,6;
     }
 }

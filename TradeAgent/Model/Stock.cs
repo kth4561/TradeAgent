@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TradeAgent.Model
+namespace TradeAgent
 {
     public class Stock : IEquatable<Stock>
     {
@@ -20,30 +20,19 @@ namespace TradeAgent.Model
         ////////////////
         /// t8430
         ////////////////
-
-        ////종목명,hname,hname,char,20;
-        ////단축코드,shcode,shcode,char,6;
-        ////확장코드,expcode,expcode,char,12;
-        ////ETF구분(1:ETF),etfgubun,etfgubun,char,1;
-        ////상한가,uplmtprice,uplmtprice,long,8;
-        ////하한가,dnlmtprice,dnlmtprice,long,8;
-        ////전일가,jnilclose,jnilclose,long,8;
-        ////주문수량단위,memedan,memedan,char,5;
-        ////기준가,recprice,recprice,long,8;
-        ////구분(1:코스피2:코스닥),gubun,gubun,char,1;
-        public string hname;
-        public string shcode;
-        public string expcode;
-        public bool etfgubun;
-        public long uplmtprice;
-        public long dnlmtprice;
-        public long jnilclose;
-        public long memedan;
-        public long recprice;
-        public int gubun;
+        public string hname; //hname; hname,hname,char,20
+        public string shcode; //shcode; shcode,shcode,char,6
+        public string expcode; //expcode; expcode,expcode,char,12
+        public bool ETF여부; //etfgubun; (1:ETF),etfgubun,etfgubun,char,1
+        public long 상한가; //uplmtprice; ,uplmtprice,uplmtprice,long,8
+        public long 하한가; //dnlmtprice; dnlmtprice,dnlmtprice,long,8
+        public long 전일가; //jnilclose; jnilclose,jnilclose,long,8
+        public long 주문수량단위; //memedan; memedan,memedan,char,5
+        public long 기준가; // recprice; recprice,recprice,long,8
+        public int 구분; // gubun; (1:코스피2:코스닥),gubun,gubun,char
         
-        public bool isBad;          // 관리종목
-        public bool isPreferred;    // 우선주
+        public bool 불량종목여부;          // 불량종목
+        public bool 우선주여부;    // 우선주
         public StockFinance finance;
 
         public bool Equals(Stock stock)

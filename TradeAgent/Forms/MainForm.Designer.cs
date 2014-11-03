@@ -1,4 +1,4 @@
-﻿namespace TradeAgent.Forms
+﻿namespace TradeAgent
 {
     partial class MainForm
     {

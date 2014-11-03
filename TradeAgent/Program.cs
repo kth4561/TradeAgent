@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TradeAgent.Forms;
 using log4net;
 
 namespace TradeAgent
