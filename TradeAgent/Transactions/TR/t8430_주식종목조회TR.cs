@@ -22,7 +22,7 @@ namespace TradeAgent.Transactions
         {
             string outblock = resName + "OutBlock";
             int count = query.GetBlockCount(outblock);
-            List<Stock> data = new List<Stock>(count);
+            List<Stock> list = new List<Stock>(count);
             Stock stock;
             for (int i = 0; i < count; i++)
             {
@@ -47,7 +47,7 @@ namespace TradeAgent.Transactions
             input = null;
             if (OnReceiveComplete != null)
             {
-                OnReceiveComplete.Invoke(data);
+                OnReceiveComplete.Invoke(list);
             }           
         }
 

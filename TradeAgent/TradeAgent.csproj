@@ -126,6 +126,7 @@
     <Compile Include="Control\RichTextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Model\ChartData.cs" />
     <Compile Include="Model\Stock.cs" />
     <Compile Include="Model\StockFinance.cs" />
     <Compile Include="SessionCtrl.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Transactions\TR\t1404_BadStockListTR.cs" />
     <Compile Include="Transactions\TR\t1405_MoreBadStockListTR.cs" />
     <Compile Include="Transactions\TR\t3320_재무요약TR.cs" />
+    <Compile Include="Transactions\TR\t8412_주식분봉차트TR.cs" />
     <Compile Include="Transactions\XADataAdapter.cs" />
     <Compile Include="Transactions\TR\t8430_주식종목조회TR.cs" />
     <EmbeddedResource Include="Forms\LoginForm.resx">
