@@ -30,6 +30,7 @@
         {
             this.rbConsole = new TradeAgent.Control.RichTextBoxEx();
             this.btSync = new System.Windows.Forms.Button();
+            this.btGetData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // rbConsole
@@ -54,11 +55,22 @@
             this.btSync.UseVisualStyleBackColor = true;
             this.btSync.Click += new System.EventHandler(this.btSync_Click);
             // 
+            // btGetData
+            // 
+            this.btGetData.Location = new System.Drawing.Point(618, 43);
+            this.btGetData.Name = "btGetData";
+            this.btGetData.Size = new System.Drawing.Size(125, 23);
+            this.btGetData.TabIndex = 2;
+            this.btGetData.Text = "btGetData";
+            this.btGetData.UseVisualStyleBackColor = true;
+            this.btGetData.Click += new System.EventHandler(this.btGetData_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(747, 539);
+            this.Controls.Add(this.btGetData);
             this.Controls.Add(this.btSync);
             this.Controls.Add(this.rbConsole);
             this.Name = "MainForm";
@@ -73,5 +85,6 @@
 //        private System.Windows.Forms.RichTextBox rbConsole;
         private TradeAgent.Control.RichTextBoxEx rbConsole;
         private System.Windows.Forms.Button btSync;
+        private System.Windows.Forms.Button btGetData;
     }
 }

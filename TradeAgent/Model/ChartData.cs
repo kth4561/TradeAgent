@@ -42,11 +42,11 @@ namespace TradeAgent
 		public long 종가;//,close,close,long,8;
 		public long 거래량;//,jdiff_vol,jdiff_vol,long,12;
 		public long 거래대금;//,value,value,long,12;
-		public long 수정구분;//,jongchk,jongchk,long,13;
-        public double 수정비율;//,rate,rate,double,6.2;
-		public long 수정주가반영항목;//,pricechk,pricechk,long,13;
-		public long 수정비율반영거래대금;//,ratevalue,ratevalue,long,12;
-		public int 종가등락구분;//(1:상한2:상승3:보합4:하한5:하락주식일만사용),sign,sign,char,1;
+        //public long 수정구분;//,jongchk,jongchk,long,13;
+        //public double 수정비율;//,rate,rate,double,6.2;
+        //public long 수정주가반영항목;//,pricechk,pricechk,long,13;
+        //public long 수정비율반영거래대금;//,ratevalue,ratevalue,long,12;
+        //public int 종가등락구분;//(1:상한2:상승3:보합4:하한5:하락주식일만사용),sign,sign,char,1;
 
 
         //public bool Equals(Stock stock)

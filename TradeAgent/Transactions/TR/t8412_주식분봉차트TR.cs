@@ -34,16 +34,17 @@ namespace TradeAgent.Transactions
                 data = new ChartData(shcode);
                 data.date = query.GetFieldData(outblock, "date", i);
                 data.time = query.GetFieldData(outblock, "time", i);
-                data.시가 = Convert.ToInt64(query.GetFieldData(outblock, "시가", i));
-                data.고가 = Convert.ToInt64(query.GetFieldData(outblock, "고가", i));
-                data.저가 = Convert.ToInt64(query.GetFieldData(outblock, "저가", i));
-                data.종가 = Convert.ToInt64(query.GetFieldData(outblock, "종가", i));
-                data.거래량 = Convert.ToInt64(query.GetFieldData(outblock, "거래량", i));
-                data.거래대금 = Convert.ToInt64(query.GetFieldData(outblock, "거래대금", i));
-                data.수정구분 = Convert.ToInt64(query.GetFieldData(outblock, "수정구분", i));
-                data.수정비율 = Convert.ToDouble(query.GetFieldData(outblock, "수정비율", i));
-                data.종가등락구분 = Convert.ToInt16(query.GetFieldData(outblock, "종가등락구분", i));
+                data.시가 = Convert.ToInt64(query.GetFieldData(outblock, "open", i));
+                data.고가 = Convert.ToInt64(query.GetFieldData(outblock, "high", i));
+                data.저가 = Convert.ToInt64(query.GetFieldData(outblock, "low", i));
+                data.종가 = Convert.ToInt64(query.GetFieldData(outblock, "close", i));
+                data.거래량 = Convert.ToInt64(query.GetFieldData(outblock, "jdiff_vol", i));
+                data.거래대금 = Convert.ToInt64(query.GetFieldData(outblock, "value", i));
+                //data.수정구분 = Convert.ToInt64(query.GetFieldData(outblock, "jongchk", i));
+                //data.수정비율 = Convert.ToDouble(query.GetFieldData(outblock, "rate", i));
+                //data.종가등락구분 = Convert.ToInt16(query.GetFieldData(outblock, "sign", i));
 
+                Console.WriteLine("[" + shcode + "] " + data.date + " " + data.time + " - " + data.종가);// + " => " + data.종가등락구분 + " - " + data.수정구분 + " " + data.수정비율);
                 list.Add(data);
             }
 

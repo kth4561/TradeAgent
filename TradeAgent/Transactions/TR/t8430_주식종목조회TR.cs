@@ -39,8 +39,8 @@ namespace TradeAgent.Transactions
                 stock.구분 = Convert.ToInt32(query.GetFieldData(outblock, "gubun", i));
                 stock.우선주여부 = !stock.shcode.Substring(stock.shcode.Length - 1).Equals("0");
                 //Console.WriteLine(stock.shcode.Substring(stock.shcode.Length - 1) + " : " + stock.shcode + " : " + stock.hname + " : " + stock.isPreferred + " : " + (!stock.shcode.Substring(stock.shcode.Length - 1).Equals("0")));
-                
-                data.Add(stock);
+
+                list.Add(stock);
             }
 
             // 데이터 처리가 완료되면 

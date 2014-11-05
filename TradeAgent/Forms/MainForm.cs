@@ -225,5 +225,34 @@ namespace TradeAgent
         {
             rbConsole.ScrollToCaret();
         }
+
+        private void btGetData_Click(object sender, System.EventArgs e)
+        {
+            requestChartData();
+        }
+
+
+        // 차트 데이터 추출
+        void requestChartData()
+        {
+            rbConsole.WriteLine("[차트데이터] ", Color.GreenYellow);
+            t8412_주식분봉차트TR tr = new t8412_주식분봉차트TR();
+            tr.OnReceiveComplete += OnReceiveChartData;
+            Hashtable ht = new Hashtable();
+            ht.Add("shcode", "122630"); // 레버리지
+            ht.Add("ncnt", 1); // 1분
+            ht.Add("qrycnt", "2000"); // 출력개수
+            ht.Add("sdate", "20140101"); // 시작일
+            ht.Add("edate", "20141101"); // 종료일
+            ht.Add("comp_yn", "Y"); // 압축여부
+            tr.request(ht);
+        }
+
+
+        void OnReceiveChartData(List<ChartData> data)
+        {
+      
+        }
+
     }
 }
